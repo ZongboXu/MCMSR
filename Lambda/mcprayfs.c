@@ -1,3 +1,26 @@
+/*
+The goal of this program is to simulate P and Rayleigh waves muliple scattering due to perturbations on Lame parameter in a homogeneous medium.
+The code is based on the Monte Carlo simulation. The idea is to simulate a wave particle (P/Rayleigh) propagating and scattering in a time period multiple times.
+This code is with a more realistic free surface boundary condition than mcpray.c. The free surface here allow mode conversion like P->SV. 
+As the SV wave will not scatter due to the Lame parameter perturbations, the SV wave energy acts like leakage energy.
+Thus Rayleigh/P ratio will be higher than the result in mcpray.c.
+
+Variables and packages in the code:
+gsl_rng.h is for generating random number.
+Dz is the thickness for each layer in the medium. Although the medium is homogenous, I divide the medium into layers for computing Rayleigh-wave eigenfunctions at each depth.
+Nlay is the number of layers.
+dt is the time interval in one simulation.
+nsteps is the total time steps in one simulation.
+nwalks is the total simulation times.
+dz is the depth range for detecting waves/particles.
+dr is the radius range for detecting waves/particles.
+MASTER master processor in MPI.
+vp is the P-wave velocity of the medium.
+vs is the S-wave velocity
+vr is the Rayleigh-wave phase/group velocity of the medium. As the medium is homogenous, there is no dispersion.
+n is the scatter density.
+*/
+
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
@@ -19,10 +42,14 @@
 #define vr 2.7425
 #define n 2
 
-// cross section sig
+// sigR cross section of incident Rayleigh waves, equal sigRR+sighRP
+// sigeP effective cross section of incidnet P wave
+// intpisq integral of the square eigenfunctions in the whole depth.
 double sigR,sigRR,sigRP,sigPP,sigeP,zsource,fre,intpisq;
+//  eigenfunctions and probability distribution of Rayleigh wave scattering to P wave in depth
 double eigfun[3][Nlay],pRPz[Nlay-1];
 // wave energy in each processor 
+// // Energy/number of P (in a shallow slab), Rayleigh and total P waves at each time step.
 double Ep[nsteps],Es[nsteps],Er[nsteps],Ept[nsteps];
 double Eplay[nsteps][Nlay],Eplaysum[nsteps][Nlay];
 double  Envp[nsteps][nr],Envr[nsteps][nr],dv[nr],ds[nr];
@@ -31,10 +58,18 @@ double Epsum[nsteps],Ersum[nsteps],Eptsum[nsteps],Essum[nsteps];
 double Envpsum[nsteps][nr],Envrsum[nsteps][nr];
 long long int ndiffusssum[nsteps][nr], ndiffuss[nsteps][nr];
 
+// azi0 is the propagation azimuth
+// ang0 is the propagation angle from the vertical downgoing direction.
+// x,y,z are the partical location
+// kx0, ky0, kz0 is the propagation slowness in x,y,z direction
+// deltat is the traveltime before next time step
+// freetime is the propagation time between two scatterers.
 double azi0,ang0,x,y,z,t,kx0,ky0,kz0,deltat,freetime;
 int it=0;
 long long int idiffus=0;
+// for random number
 gsl_rng * r;
+// wave/partical mode: P or Rayleigh
 char mode;
 
 //***************Rayleigh waves

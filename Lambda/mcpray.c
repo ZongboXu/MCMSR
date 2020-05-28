@@ -11,7 +11,7 @@ nsteps is the total time steps in one simulation.
 nwalks is the total simulation times.
 dz is the depth range for detecting waves/particles.
 dr is the radius range for detecting waves/particles.
-MASTER master thread in MPI.
+MASTER master processor in MPI.
 vp is the P-wave velocity of the medium.
 vs is the S-wave velocity
 vr is the Rayleigh-wave phase/group velocity of the medium. As the medium is homogenous, there is no dispersion.
