@@ -11,4 +11,4 @@ Monte Carlo simulation of Multiply Scattered body and Rayleigh waves. The simula
 ## Output
 
 ## References
-Xu, Z., Margerin, L., & Mikesell, T. D. (2022). Monte Carlo simulations of coupled body-and Rayleigh-wave multiple scattering in elastic media. *Geophysical Journal International*, 228(2), 1213-1236, [link] (https://academic.oup.com/gji/article-abstract/228/2/1213/6368848).
+Xu, Z., Margerin, L., & Mikesell, T. D. (2022). [Monte Carlo simulations of coupled body-and Rayleigh-wave multiple scattering in elastic media](https://academic.oup.com/gji/article-abstract/228/2/1213/6368848). *Geophysical Journal International*, 228(2), 1213-1236.
