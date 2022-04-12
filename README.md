@@ -1,7 +1,7 @@
 # MCMSR
 
 
-Monte Carlo simulation of Multiply Scattered body and Rayleigh waves. The simulation is based on an elastic and homogeneous medium with random density perturbations as scatterers.  
+**M**onte **C**arlo simulation of **M**ultiply **S**cattered body and **R**ayleigh waves. The simulation is based on an elastic and homogeneous medium with random density perturbations as scatterers.  
 
 ## Environment requirements 
 - **C** language (gcc)
