@@ -1,5 +1,10 @@
-# MCMSR
+=======
+MCMSR
+=======
+
 Monte Carlo simulation of Multiply Scattered body and Rayleigh waves. 
+
+.. contents::
 
 This package will include codes for MC simulation of multiply scattered coupled body and Rayliegh waves due to perturbations on Lame parameter and density. The velocity model here is elastic, homogeneous and isotropic. 
 
